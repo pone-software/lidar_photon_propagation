@@ -1,0 +1,19 @@
+name = "LidarPhotonProp"
+uuid = "11a571b7-fb93-4e16-af78-125648a5b1f3"
+authors = ["Christian Haack <christian.haack@tum.de>"]
+version = "0.1.0"
+
+[deps]
+ArgParse = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+Format = "1fa38f19-a742-5d3f-a2b9-30dd87b9d5f8"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+PhotonPropagation = "28d5a9e5-7176-4325-9f36-6543c975d45b"
+PhysicsTools = "aacfb283-0df6-49c4-85a4-270b72c3b0a9"
+ProgressLogging = "33c8b6b6-d38a-422a-b730-caa89a2f386c"
+Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+Rotations = "6038ab10-8711-5258-84ad-4b1120ba62dc"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+TerminalLoggers = "5d786b92-1e48-4d6f-9151-6b4477ca9bed"
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
