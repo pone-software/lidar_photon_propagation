@@ -110,7 +110,7 @@ laser tilts `tilt_angles`. For each angle, the simulation is repeated `n_sims` t
 different seeds.
 Returns a `DataFrame` with photons that have hit the
 """
-function run_photon_sim(; g, tilt_angles, n_sims)
+function run_photon_sim(; g, tilt_angles, n_sims, _...)
 
     tilt_angles = deg2rad.(tilt_angles)
     all_photons = []
