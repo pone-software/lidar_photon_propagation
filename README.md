@@ -14,7 +14,7 @@ Pkg.instantiate()
 
 ## Running photon propagation
 To simulate the lidar, you can run the convience script `scripts/simulate_lidar.jl`.
-This will run photon propagation + optics simulation for a list of lidar tilt angles. Note: This requires a working [https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html](CUDA) installation.
+This will run photon propagation + optics simulation for a list of lidar tilt angles. Note: This requires a working [CUDA](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) installation.
 ```bash
 julia --project=. scripts/simulate_lidar.jl --output outfile.parquet --n_sims 10 --g 0.99 --tilt_angles -5 -4 -3 -2 -1 0
 ```
