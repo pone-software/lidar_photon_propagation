@@ -173,7 +173,7 @@ function run_as_script()
     photons = run_photon_sim(; parsed_args...)
 
     apply_fov!(photons, 1.43)
-    write_parquet(parsed_args.output, photons[:, [:time, :laser_tilt, :abs_weight, :hit_pmt]])
+    write_parquet(parsed_args[:output], photons[:, [:time, :laser_tilt, :abs_weight, :hit_pmt]])
 end
 
 
