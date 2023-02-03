@@ -155,7 +155,7 @@ function run_as_script()
         arg_type = String
         required = true
         "--n_sims"
-        help = "Number of simulations"
+        help = "Number of simulations per tilt angle"
         arg_type = Int
         required = true
         "--g"
