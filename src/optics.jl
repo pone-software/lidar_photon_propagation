@@ -314,7 +314,6 @@ function trace_ray(ray::Ray, world::World)
         ray_r = rotate_ray(ray, R)
         
         isec, ray_d = intersection(ray_r, iface)
-        @show iface, isec
         if isec
             intersections[ray_d] = (iface, R)
         end    
