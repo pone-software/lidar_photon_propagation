@@ -122,7 +122,7 @@ if !isinteractive()
 end
 
 #photons = run_photon_sim(g=0.99, tilt_angles=[-2.5], n_sims=1)
-photons = run_photon_sim(g=0.99, tilt_angles=(-7.5:2.5:5), n_sims=5)
+photons = run_photon_sim(g=0.99, tilt_angles=(-5:1:1), n_sims=7)
 apply_fov!(photons, 1.43)
 rays = Ray.(photons[:, :position], photons[:, :direction], SNULL)
 
@@ -171,6 +171,8 @@ fig
 photons[:, :screen] .= rays_screen
 photons[:, :screen_and_fov] .= photons[:, :screen] .&& photons[:, :fov]  
 
+sum(photons[:, :screen])
+sum(photons[:, :screen_and_fov])
 groups = groupby(photons, :laser_tilt)
 
 length(groups)
@@ -184,7 +186,7 @@ end
 fig
 
 acc_rates_fov = combine(groups, [:screen_and_fov, :abs_weight] => ((fov, weight) -> sum(weight[fov]) / sum(weight)) => :acc_rate)
-lines(rad2deg.(acc_rates[:, :laser_tilt]), acc_rates[:, :acc_rate],
+lines(rad2deg.(acc_rates_fov[:, :laser_tilt]), acc_rates_fov[:, :acc_rate],
     axis=(; xlabel="Laser Tilt (deg)", ylabel="Acceptance Rate (FOV)"))
 
 
@@ -199,7 +201,7 @@ for (i, (gname, group)) in enumerate(pairs(groups))
     row, col = divrem(i-1, 3)
     ax = Axis(fig[row+1, col+1], title=format("Laser tilt: {:.1f} (deg)", rad2deg(gname[:laser_tilt])),
     xlabel="Time (ns)", yscale=log10, limits=(-5, 55, 1E-1, 1E4))
-    mask = group[:, :fov]
+    mask = group[:, :screen_and_fov]
     if sum(mask) > 0
         hist!(group[mask, :time], weight=group[mask, :abs_weight], bins=time_bins, fillto=1E-1)
     end
