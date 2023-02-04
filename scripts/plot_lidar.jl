@@ -3,26 +3,12 @@ using CairoMakie
 using Parquet
 using DataFrames
 
-fig = Figure()
-ax = Axis3(fig[1, 1])
 
-for (r1, r2) in zip(traced_rays[rays_screen], traced_rays[rays_screen])
 
-    r1_bt = r1.position .- 0.1 * r1.direction
+photons = DataFrame(read_parquet(joinpath(@__DIR__, "../outfile.parquet")))
 
-    r2_ft = r2.position .+ 0.1 * r2.direction
 
-    #@show hcat(r1_bt, r1.position, r2.position)
 
-    lines!(ax, hcat(r1_bt, r1.position, r2.position))
-end
-fig
-
-photons[:, :screen] .= rays_screen
-photons[:, :screen_and_fov] .= photons[:, :screen] .&& photons[:, :fov]
-
-sum(photons[:, :screen])
-sum(photons[:, :screen_and_fov])
 groups = groupby(photons, :laser_tilt)
 
 length(groups)
@@ -51,9 +37,22 @@ for (i, (gname, group)) in enumerate(pairs(groups))
     row, col = divrem(i - 1, 3)
     ax = Axis(fig[row+1, col+1], title=format("Laser tilt: {:.1f} (deg)", rad2deg(gname[:laser_tilt])),
         xlabel="Time (ns)", yscale=log10, limits=(-5, 55, 1E-1, 1E4))
-    mask = group[:, :screen_and_fov]
+    mask = Bool.(group[:, :hit_pmt])
     if sum(mask) > 0
         hist!(group[mask, :time], weight=group[mask, :abs_weight], bins=time_bins, fillto=1E-1)
     end
 end
 fig
+fig = Figure()
+ax = Axis3(fig[1, 1])
+
+for (r1, r2) in zip(traced_rays[rays_screen], traced_rays[rays_screen])
+
+    r1_bt = r1.position .- 0.1 * r1.direction
+
+    r2_ft = r2.position .+ 0.1 * r2.direction
+
+    #@show hcat(r1_bt, r1.position, r2.position)
+
+    lines!(ax, hcat(r1_bt, r1.position, r2.position))
+end
